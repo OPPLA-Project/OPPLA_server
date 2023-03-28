@@ -1,6 +1,7 @@
 package com.oppla.server.domain.question.entity;
 
-import com.oppla.server.domain.user.entity.Member;
+import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.global.common.TimeStamped;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @Builder
-public class Question {
+public class Question extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")

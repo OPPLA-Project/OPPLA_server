@@ -1,7 +1,7 @@
-package com.oppla.server.domain.user.entity;
+package com.oppla.server.domain.member.entity;
 
+import com.oppla.server.global.common.TimeStamped;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -11,11 +11,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Member extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "member_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "grade_id")
@@ -51,7 +51,7 @@ public class User {
     @Column
     private Boolean question_TF;
 
-    public User(String nickname, String email, String snsType, String profileUrl) {
+    public Member(String nickname, String email, String snsType, String profileUrl) {
         this.nickname = nickname;
         this.email = email;
         this.snsType = snsType;
