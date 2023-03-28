@@ -1,4 +1,4 @@
-package com.oppla.server.user.domain;
+package com.oppla.server.domain.user.entity;
 
 import lombok.Getter;
 
@@ -16,7 +16,4 @@ public class Grade {
 
     @Column(name = "grade_img")
     private String gradeImg;
-
-    @OneToMany(mappedBy = "grade")
-    private List<User> userList = new ArrayList<>();
 }

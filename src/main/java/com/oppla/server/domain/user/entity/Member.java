@@ -1,8 +1,7 @@
-package com.oppla.server.user.domain;
+package com.oppla.server.domain.user.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.type.TrueFalseType;
 
 import javax.persistence.*;
 
