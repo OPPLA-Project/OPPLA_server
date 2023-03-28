@@ -1,18 +1,22 @@
-package com.oppla.server.domain.user.entity;
+package com.oppla.server.domain.member.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grade_id")
-    private Long gradeId;
+    private Long id;
 
     @Column(name = "grade_img")
     private String gradeImg;

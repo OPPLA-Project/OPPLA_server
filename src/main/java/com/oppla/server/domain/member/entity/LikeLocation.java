@@ -1,7 +1,5 @@
-package com.oppla.server.domain.answer.entity;
+package com.oppla.server.domain.member.entity;
 
-import com.oppla.server.domain.question.entity.Question;
-import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.global.common.TimeStamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,28 +11,27 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
-public class Answer extends TimeStamped {
+@Builder
+public class LikeLocation extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answer_id")
+    @Column(name = "like_location_id")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Column
-    private String content;
+    private String locationName;
 
     @Column
-    private Boolean selection;
+    private String address;
 
     @Column
-    private Integer recentPoint;
+    private Long latitude;
+
+    @Column
+    private Long longitude;
 }

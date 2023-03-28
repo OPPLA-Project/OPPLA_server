@@ -1,50 +1,42 @@
-package com.oppla.server.domain.question.entity;
+package com.oppla.server.domain.review.entity;
 
-import com.oppla.server.domain.user.entity.Member;
+import com.oppla.server.domain.answer.entity.Answer;
+import com.oppla.server.domain.question.entity.Question;
+import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.global.common.TimeStamped;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
 @Builder
-public class Question {
+public class Review extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "question_id")
+    @Column(name = "review_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="member_id")
+    @JoinColumn(name="answer_id")
+    private Answer answer;
+
+    @ManyToOne
+    @JoinColumn(name="question_id")
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name="answerer_id")
     private Member member;
 
     @Column
-    private Long laititude;
+    private Long score;
 
     @Column
-    private Long longitude;
+    private Integer infoScore;
 
     @Column
-    private String title;
-
-    @Column
-    private String content;
-
-    @Column
-    private String gender;
-
-    @Column
-    private String status;
-
-    @Column(name = "finish_time")
-    private LocalDateTime finishTime;
-
-    @Column
-    private Boolean selection;
-
-    @Column
-    private Integer recentPoint;
+    private Integer speedScore;
 }

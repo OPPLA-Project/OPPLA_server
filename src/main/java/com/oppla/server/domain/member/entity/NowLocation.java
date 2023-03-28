@@ -1,4 +1,4 @@
-package com.oppla.server.domain.answer.entity;
+package com.oppla.server.domain.member.entity;
 
 import com.oppla.server.global.common.TimeStamped;
 import lombok.AllArgsConstructor;
@@ -8,21 +8,24 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
-public class AnswerImg {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class NowLocation extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answer_img_id")
+    @Column(name = "now_location_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column
-    private String imgUrl;
+    private Long latitude;
+
+    @Column
+    private Long longitude;
 }
