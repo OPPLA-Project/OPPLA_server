@@ -1,6 +1,8 @@
 package com.oppla.server.domain.question.entity;
 
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.enums.Gender;
+import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.oppla.server.global.common.TimeStamped;
 import lombok.*;
 
@@ -35,10 +37,12 @@ public class Question extends TimeStamped {
     private String content;
 
     @Column
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private QuestionStatus status;
 
     @Column(name = "finish_time")
     private LocalDateTime finishTime;

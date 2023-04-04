@@ -1,5 +1,7 @@
 package com.oppla.server.domain.member.entity;
 
+import com.oppla.server.domain.member.enums.Gender;
+import com.oppla.server.domain.member.enums.MemberStatus;
 import com.oppla.server.global.common.TimeStamped;
 import lombok.*;
 
@@ -40,10 +42,12 @@ public class Member extends TimeStamped {
     private Integer point;
 
     @Column
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status;
 
     @Column
     private String intro;
