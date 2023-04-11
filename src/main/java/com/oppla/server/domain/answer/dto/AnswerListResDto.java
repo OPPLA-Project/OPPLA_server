@@ -1,5 +1,6 @@
 package com.oppla.server.domain.answer.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,23 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class AnswerListResDto {
-    /**
-     * == 답변자 정보 ==
-     * 1. 답변자 id
-     * 2. 답변자 후기 점수
-     * 3. 답변자 답변수
-     * 4. 답변자 채택률
-     *
-     *  == 답변 보기 ==
-     *  1. 내용
-     *  2. 답변 이미지
-     */
 
+    @Schema(description = "답변 작성자 Id")
     private Long memberId;
+    @Schema(description = "답변 작성자의 후기점수")
     private Integer reviewScore; // 후기점수가 평균이면 Long아닌가욤
+    @Schema(description = "답변 작성자의 답변 개수")
     private Integer answerNum;
+    @Schema(description = "답변 작성자의 채택률")
     private Long selectionRate;
 
+    @Schema(description = "답변 내용")
     private String content;
+    @Schema(description = "답변에 사용된 사진 목록")
     private List<String> imgList;
 }

@@ -30,6 +30,10 @@ public class AnswerController {
         return new BaseResponse();
     }
 
+    @Operation(
+            summary = "답변 목록 조회",
+            description = "한 질문에 달린 답변 목록을 조회하는 API"
+    )
     @GetMapping("/list/{questionId}")
     public BaseDataResponse<List<AnswerListResDto>> getAnswerList(@PathVariable("questionId") Long questionId){
 
