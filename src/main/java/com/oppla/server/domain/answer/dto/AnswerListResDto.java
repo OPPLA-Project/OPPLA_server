@@ -17,11 +17,11 @@ public class AnswerListResDto {
     @Schema(description = "답변 작성자 Id")
     private Long memberId;
     @Schema(description = "답변 작성자의 후기점수")
-    private Integer reviewScore; // 후기점수가 평균이면 Long아닌가욤
+    private Integer reviewScore; // 후기점수가 평균이면 Double아닌가욤
     @Schema(description = "답변 작성자의 답변 개수")
     private Integer answerNum;
     @Schema(description = "답변 작성자의 채택률")
-    private Long selectionRate;
+    private Double selectionRate;
 
     @Schema(description = "답변 내용")
     private String content;
