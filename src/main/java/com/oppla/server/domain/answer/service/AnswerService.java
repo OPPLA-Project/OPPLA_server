@@ -62,7 +62,7 @@ public class AnswerService {
                             .memberId(answer.getMember().getId())
                             .reviewScore(answer.getMember().getReviewScore())
                             .answerNum(answerNum)
-                            .selectionRate((long) (selectionNum/answerNum))
+                            .selectionRate((Math.round((double) selectionNum / (double) answerNum * 100.0*100)/100.0))
                             .content(answer.getContent())
                             .imgList(imgList)
                             .build();
