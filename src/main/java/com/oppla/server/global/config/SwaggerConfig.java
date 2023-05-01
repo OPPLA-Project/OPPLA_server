@@ -44,4 +44,12 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi answerGroup(){
+        return GroupedOpenApi.builder()
+                .group("Answer")
+                .pathsToMatch("/answer/**")
+                .build();
+    }
+
 }
