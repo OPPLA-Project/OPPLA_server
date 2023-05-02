@@ -10,7 +10,9 @@ import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.question.exception.NotFoundQuestionException;
 import com.oppla.server.domain.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,9 +49,9 @@ public class AnswerService {
 
     }
 
-    public List<AnswerListResDto> getAnswerList(Long questionId) {
+    public List<AnswerListResDto> getAnswerList(Long questionId, Pageable pageable) {
 
-        return answerRepository.findAllByQuestionId(questionId).stream().map(answer -> {
+        return answerRepository.findAllByQuestionId(questionId, pageable).stream().map(answer -> {
                 // 답변 수
                 Integer answerNum = answerRepository.countByMemberId(answer.getMember().getId());
                 // 채택된 수

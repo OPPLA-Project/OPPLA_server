@@ -8,8 +8,10 @@ import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -32,13 +34,13 @@ public class AnswerController {
 
     @Operation(
             summary = "답변 목록 조회",
-            description = "한 질문에 달린 답변 목록을 조회하는 API"
+            description = "한 질문에 달린 답변 목록을 조회하는 API, Pagination 적용"
     )
     @GetMapping("/list/{questionId}")
-    public BaseDataResponse<List<AnswerListResDto>> getAnswerList(@PathVariable("questionId") Long questionId){
+    public BaseDataResponse<List<AnswerListResDto>> getAnswerList(@PathVariable("questionId") Long questionId, Pageable pageable){
 
         return BaseDataResponse.<List<AnswerListResDto>>builder()
-                .result(answerService.getAnswerList(questionId))
+                .result(answerService.getAnswerList(questionId, pageable))
                 .build();
     }
 
