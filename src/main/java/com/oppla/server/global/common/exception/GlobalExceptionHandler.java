@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
      *
      * @exception RuntimeException
      * @return INTERNAL_SERVER_ERROR
-     */
+     *//*
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> runtimeException(RuntimeException exception){
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
                         .errorCode(INTERNAL_SERVER_ERROR)
                         .build()
                 );
-    }
+    }*/
 
     /**
      * == DB Exception ==
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
      * @return INTERNAL_SERVER_ERROR
      */
 
-    @ExceptionHandler(Exception.class)
+    //@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         log.error(
                 LOG_FORMAT,

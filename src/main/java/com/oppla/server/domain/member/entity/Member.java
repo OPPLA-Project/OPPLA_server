@@ -36,30 +36,28 @@ public class Member extends TimeStamped {
     private String profileUrl;
 
     @Column(name = "review_score")
-    private Integer reviewScore;
+    @Builder.Default
+    private Integer reviewScore = 0;
 
     @Column
-    private Integer point;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    @Builder.Default
+    private Integer point = 700;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private MemberStatus status;
+    @Builder.Default
+    private Gender gender = Gender.NONE;
 
     @Column
-    private String intro;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private MemberStatus status = MemberStatus.ACTIVE;
 
     @Column
-    private Boolean question_TF;
+    @Builder.Default
+    private String intro = "";
 
-    public Member(String nickname, String email, String snsType, String profileUrl) {
-        this.nickname = nickname;
-        this.email = email;
-        this.snsType = snsType;
-        this.profileUrl = profileUrl;
-    }
-
+    @Column
+    @Builder.Default
+    private Boolean question_TF = Boolean.TRUE;
 }
