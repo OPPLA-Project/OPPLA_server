@@ -42,7 +42,7 @@ public class AnswerService {
                         .member(member)
                         .content(dto.getContent())
                         .selection(false)
-                        .recentPoint(member.getPoint())
+                        //.recentPoint(member.getPoint())
                 .build()
         );
 
