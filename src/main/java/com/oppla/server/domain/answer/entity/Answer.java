@@ -34,7 +34,4 @@ public class Answer extends TimeStamped {
 
     @Column
     private Boolean selection;
-
-    @Column
-    private Integer recentPoint;
 }

@@ -25,10 +25,13 @@ public class Question extends TimeStamped {
     private Member member;
 
     @Column
-    private Long laititude;
+    private String locationName;
 
     @Column
-    private Long longitude;
+    private Double laititude;
+
+    @Column
+    private Double longitude;
 
     @Column
     private String title;
@@ -49,7 +52,4 @@ public class Question extends TimeStamped {
 
     @Column
     private Boolean selection;
-
-    @Column
-    private Integer recentPoint;
 }
