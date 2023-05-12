@@ -101,12 +101,12 @@ class AnswerServiceTest {
                         .selection(false)
                         .build()
         );
-        for(int i=0; i<9; i++){
+        for (int i = 0; i < 9; i++) {
             answerList.add(
                     Answer.builder()
                             .question(question)
                             .member(member2)
-                            .content("answer test "+(i+1))
+                            .content("answer test " + (i + 1))
                             .selection(false)
                             .build()
             );
@@ -115,7 +115,7 @@ class AnswerServiceTest {
                 Answer.builder()
                         .question(question)
                         .member(member2)
-                        .content("answer test "+(10))
+                        .content("answer test " + (10))
                         .selection(true)
                         .build()
         );
@@ -138,7 +138,7 @@ class AnswerServiceTest {
         answerImgList.add(answerImg2);
         answerImgRepository.saveAll(answerImgList);
 
-        Pageable pageable = PageRequest.of(0,10, Sort.by("answerNum").ascending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("answerNum").ascending());
 
 
         //when

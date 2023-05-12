@@ -44,5 +44,20 @@ public class AnswerController {
                 .build();
     }
 
+    @Operation(
+            summary = "답변 채택",
+            description = "질문자가 Question에 달린 답변중 1개를 채택한다.\n" +
+                    "1. 채택된 Answer Selection 값 변경 (false -> true)\n" +
+                    "2. 채택한 Question Selection 값 변경 (flase -> true)\n" +
+                    "3. 답변자 Point + 500, 질문자 Point + 200(보증금)\n" +
+                    "4. 답변자와 질문자의 PointRecord 업데이트"
+
+    )
+    @PatchMapping("/list/{answerId}/selection")
+    public BaseResponse pickAnswer(@PathVariable("answerId") Long answerId){
+        answerService.pickAnswer(answerId);
+
+        return new BaseResponse();
+    }
 
 }
