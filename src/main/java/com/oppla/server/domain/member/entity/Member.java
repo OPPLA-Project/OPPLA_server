@@ -62,4 +62,8 @@ public class Member extends TimeStamped {
         this.profileUrl = profileUrl;
     }
 
+    public void changePoint(Integer point){
+        this.point = point;
+    }
+
 }
