@@ -1,5 +1,6 @@
 package com.oppla.server.domain.member.entity;
 
+import com.oppla.server.domain.member.enums.PointRecordDesc;
 import com.oppla.server.global.common.TimeStamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class PointRecord extends TimeStamped {
     private Member member;
 
     @Column
-    private String description;
+    private PointRecordDesc description;
 
     @Column
     private Integer deal_point;
