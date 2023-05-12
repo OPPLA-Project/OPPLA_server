@@ -20,7 +20,7 @@ public class Question extends TimeStamped {
     @Column(name = "question_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
 
@@ -52,4 +52,8 @@ public class Question extends TimeStamped {
 
     @Column
     private Boolean selection;
+
+    public void changeSelectionStatus(Boolean status){
+        this.selection = status;
+    }
 }

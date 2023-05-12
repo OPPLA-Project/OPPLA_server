@@ -43,12 +43,12 @@ public class AnswerRepositoryImpl implements AnswerRepositoryCustom{
                         return new OrderSpecifier<>(direction, answer.member.reviewScore);
                     case "answerNum": // 이거 모르겠어요 ㅠㅠ
 //                        return new OrderSpecifier<>(direction, answer.member.id.count());
-                    case "pick":
-                        //return new OrderSpecifier<>(direction, answer.recentPoint);
                 }
             }
         }
         return new OrderSpecifier<>(Order.DESC, answer.createdAt);
     }
+
+
 
 }
