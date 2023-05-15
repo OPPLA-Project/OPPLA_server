@@ -1,6 +1,8 @@
 package com.oppla.server.domain.member.service;
 
 import com.oppla.server.domain.answer.repository.AnswerRepository;
+import com.oppla.server.domain.member.dto.MemberNicknameDuplReqDto;
+import com.oppla.server.domain.member.dto.MemberNicknameDuplResDto;
 import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
 import com.oppla.server.domain.member.dto.MemberProfileResDto;
 import com.oppla.server.domain.member.entity.Member;
@@ -84,5 +86,13 @@ public class MemberService {
     public void changeMemberProfile(Member member, MemberProfilePatchReqDto dto) {
         member.changeUserProfile(dto.getNickname(), dto.getIntro());
         memberRepository.save(member);
+    }
+
+    public MemberNicknameDuplResDto checkMemberNickname(MemberNicknameDuplReqDto dto) {
+        Boolean nicknameStatus = memberRepository.existsByNickname(dto.getNickname());
+
+        return MemberNicknameDuplResDto.builder()
+                .duplicationStatus(nicknameStatus)
+                .build();
     }
 }

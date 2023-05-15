@@ -1,5 +1,7 @@
 package com.oppla.server.domain.member.controller;
 
+import com.oppla.server.domain.member.dto.MemberNicknameDuplReqDto;
+import com.oppla.server.domain.member.dto.MemberNicknameDuplResDto;
 import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
 import com.oppla.server.domain.member.dto.MemberProfileResDto;
 import com.oppla.server.domain.member.entity.Member;
@@ -39,6 +41,19 @@ public class MemberController {
     public BaseResponse patchMemberProfile(@AuthenticationPrincipal Member member, @RequestBody MemberProfilePatchReqDto dto){
         memberService.changeMemberProfile(member, dto);
         return new BaseResponse();
+
+    }
+
+    @Operation(
+            summary = "유저 닉네임 중복 검사",
+            description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
+    )
+    @GetMapping("/member/nickname/duplication")
+    public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(MemberNicknameDuplReqDto dto){
+
+        return BaseDataResponse.<MemberNicknameDuplResDto>builder()
+                .result(memberService.checkMemberNickname(dto))
+                .build();
 
     }
 }
