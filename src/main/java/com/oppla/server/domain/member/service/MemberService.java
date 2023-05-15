@@ -1,6 +1,7 @@
 package com.oppla.server.domain.member.service;
 
 import com.oppla.server.domain.answer.repository.AnswerRepository;
+import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
 import com.oppla.server.domain.member.dto.MemberProfileResDto;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.exception.MemberNotFoundException;
@@ -11,6 +12,7 @@ import com.oppla.server.domain.review.entity.dto.InfoScoreResDto;
 import com.oppla.server.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,5 +78,11 @@ public class MemberService {
                 .infoScore(infoScoreResDto)
                 .answerSpeed(answerSpeedResDto)
                 .build();
+    }
+
+    @Transactional
+    public void changeMemberProfile(Member member, MemberProfilePatchReqDto dto) {
+        member.changeUserProfile(dto.getNickname(), dto.getIntro());
+        memberRepository.save(member);
     }
 }
