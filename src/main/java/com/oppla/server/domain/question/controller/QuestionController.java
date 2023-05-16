@@ -26,7 +26,7 @@ public class QuestionController {
             description = "질문 등록 API"
     )
     @PostMapping("")
-    public BaseResponse postQuestion(@RequestBody QuestionPostReqDto questionPostReqDto){
+    public BaseResponse postQuestion(@AuthenticationPrincipal Member member, @RequestBody QuestionPostReqDto questionPostReqDto){
         Optional<Member> dmember = memberRepository.findById(1L);
         questionService.postQuestion(dmember.get(), questionPostReqDto);
 
