@@ -22,7 +22,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "소셜 로그인 성공")
     })
     @ResponseBody
-    @RequestMapping("/kakao")
+    @PostMapping ("/kakao")
     public BaseDataResponse<AuthResponse> kakaoAuth(@RequestBody AuthReqDto authReqDto) {
         return new BaseDataResponse<>(AuthResponse.builder()
                 .appToken(authService.kakaoLogin(authReqDto).getToken())

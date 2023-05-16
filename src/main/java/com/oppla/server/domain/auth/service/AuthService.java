@@ -25,15 +25,17 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
+        AuthToken appToken;
         Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
 
         if(!isMember.isPresent()) {
             memberRepository.save(member);
+            appToken = tokenProvider.createAppToken(member.getId(), Role.USER);
         } else if (!isMember.get().getSnsType().equals(SnsType.KAKAO.toString())) {
             throw new OtherSnsTypeException();
+        } else {
+            appToken = tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }
-        System.out.println("memberId" + isMember.get().getId());
-        AuthToken appToken = tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
 
         return appToken;
     }

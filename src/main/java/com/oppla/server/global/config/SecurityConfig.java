@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private static final String[] AUTH_URL = {
-
     };
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
