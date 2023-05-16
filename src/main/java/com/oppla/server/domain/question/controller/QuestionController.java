@@ -6,6 +6,7 @@ import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.service.QuestionService;
 import com.oppla.server.global.common.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class QuestionController {
             description = "질문 등록 API"
     )
     @PostMapping("")
-    public BaseResponse postQuestion(@AuthenticationPrincipal Member member, @RequestBody QuestionPostReqDto questionPostReqDto){
+    public BaseResponse postQuestion(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @RequestBody QuestionPostReqDto questionPostReqDto){
         Optional<Member> dmember = memberRepository.findById(1L);
         questionService.postQuestion(dmember.get(), questionPostReqDto);
 
