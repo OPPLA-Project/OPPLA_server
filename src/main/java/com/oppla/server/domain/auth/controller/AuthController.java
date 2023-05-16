@@ -1,11 +1,13 @@
 package com.oppla.server.domain.auth.controller;
 
 import com.oppla.server.domain.auth.dto.AuthReqDto;
+import com.oppla.server.domain.auth.dto.AuthResponse;
 import com.oppla.server.domain.auth.service.AuthService;
 import com.oppla.server.global.common.response.BaseDataResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,9 @@ public class AuthController {
     })
     @ResponseBody
     @RequestMapping("/kakao")
-    public BaseDataResponse<AuthReqDto> kakaoAuth(@RequestBody AuthReqDto authReqDto) {
-        return new BaseDataResponse<>(authService.kakaoLogin(authReqDto));
+    public BaseDataResponse<AuthResponse> kakaoAuth(@RequestBody AuthReqDto authReqDto) {
+        return new BaseDataResponse<>(AuthResponse.builder()
+                .appToken(authService.kakaoLogin(authReqDto).getToken())
+                .build());
     }
 }
