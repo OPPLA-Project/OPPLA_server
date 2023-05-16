@@ -6,7 +6,6 @@ import com.oppla.server.domain.member.enums.Gender;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
-import com.oppla.server.domain.question.exception.NotFoundQuestionException;
 import com.oppla.server.domain.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

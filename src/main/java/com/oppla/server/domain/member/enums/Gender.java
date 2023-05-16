@@ -23,7 +23,7 @@ public enum Gender {
                 return gender;
             }
         }
-        return null;
+        return Gender.NONE;
     }
 
     @JsonValue
