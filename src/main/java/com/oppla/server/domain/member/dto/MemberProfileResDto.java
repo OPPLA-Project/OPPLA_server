@@ -1,7 +1,7 @@
 package com.oppla.server.domain.member.dto;
 
-import com.oppla.server.domain.review.entity.dto.AnswerSpeedResDto;
-import com.oppla.server.domain.review.entity.dto.InfoScoreResDto;
+import com.oppla.server.domain.review.dto.AnswerSpeedResDto;
+import com.oppla.server.domain.review.dto.InfoScoreResDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
