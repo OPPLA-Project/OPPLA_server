@@ -48,7 +48,7 @@ public class MemberController {
             description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
     )
     @GetMapping("/member/nickname/duplication")
-    public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(MemberNicknameDuplReqDto dto){
+    public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(@RequestBody MemberNicknameDuplReqDto dto){
 
         return BaseDataResponse.<MemberNicknameDuplResDto>builder()
                 .result(memberService.checkMemberNickname(dto))
@@ -57,8 +57,9 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "유저 닉네임 중복 검사",
-            description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
+            summary = "*유저의 질문 알림 여부를 변경",
+            description = "유저가 질문 알림을 받는 상태를 수정" +
+                    "\n Member Id Token 필요"
     )
     @PatchMapping("/member/question-tf")
     public BaseResponse changeQuestionTF(@AuthenticationPrincipal Member member){
@@ -69,6 +70,7 @@ public class MemberController {
     @Operation(
             summary = "유저의 거래내역 조회",
             description = "유저의 포인트 거래내역 조회" +
+                    "\n Member Id Token 필요" +
                     "\n Pagination 적용" +
                     "\n size: 한번에 받을 개수" +
                     "\n page: 0부터 시작"
