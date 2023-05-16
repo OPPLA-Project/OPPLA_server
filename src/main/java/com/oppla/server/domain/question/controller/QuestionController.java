@@ -1,6 +1,7 @@
 package com.oppla.server.domain.question.controller;
 
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.repository.MemberRepository;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.service.QuestionService;
 import com.oppla.server.global.common.response.BaseResponse;
@@ -12,18 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/question")
 public class QuestionController {
+    private final MemberRepository memberRepository;
     private final QuestionService questionService;
     @Operation(
             summary = "질문 등록",
             description = "질문 등록 API"
     )
     @PostMapping("")
-    public BaseResponse postQuestion(@AuthenticationPrincipal Member member, @RequestBody QuestionPostReqDto questionPostReqDto){
-        questionService.postQuestion(member, questionPostReqDto);
+    public BaseResponse postQuestion(@RequestBody QuestionPostReqDto questionPostReqDto){
+        Optional<Member> dmember = memberRepository.findById(1L);
+        questionService.postQuestion(dmember.get(), questionPostReqDto);
 
         return new BaseResponse();
     }
