@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
      * @return INTERNAL_SERVER_ERROR
      */
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         log.error(
                 LOG_FORMAT,
@@ -111,6 +111,6 @@ public class GlobalExceptionHandler {
                         .build()
                 );
 
-    }
+    }*/
 
 }
