@@ -60,4 +60,15 @@ public class Member extends TimeStamped {
     @Column
     @Builder.Default
     private Boolean question_TF = Boolean.TRUE;
+
+    public Member(String nickname, String email, String snsType, String profileUrl) {
+        this.nickname = nickname;
+        this.email = email;
+        this.snsType = snsType;
+        this.profileUrl = profileUrl;
+    }
+
+    public void changePoint(Integer point){
+        this.point = point;
+    }
 }

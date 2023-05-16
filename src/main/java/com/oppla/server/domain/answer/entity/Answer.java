@@ -21,11 +21,11 @@ public class Answer extends TimeStamped {
     @Column(name = "answer_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -35,6 +35,7 @@ public class Answer extends TimeStamped {
     @Column
     private Boolean selection;
 
-    @Column
-    private Integer recentPoint;
+    public void changeSelectionStatus(Boolean status){
+        this.selection = status;
+    }
 }
