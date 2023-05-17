@@ -50,7 +50,8 @@ public class AuthToken {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(key)
-                    .build().parseClaimsJws(token);
+                    .build()
+                    .parseClaimsJws(token);
 
             return true;
         } catch (SecurityException | MalformedJwtException e) {
