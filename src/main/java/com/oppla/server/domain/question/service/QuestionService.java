@@ -7,13 +7,15 @@ import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.oppla.server.domain.question.repository.QuestionRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
     public void postQuestion(Member member, QuestionPostReqDto questionPostReqDto) {
         questionRepository.save(
                 Question.builder()

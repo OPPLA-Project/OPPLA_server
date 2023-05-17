@@ -28,8 +28,7 @@ public class QuestionController {
     )
     @PostMapping("")
     public BaseResponse postQuestion(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @RequestBody QuestionPostReqDto questionPostReqDto){
-        Optional<Member> dmember = memberRepository.findById(1L);
-        questionService.postQuestion(dmember.get(), questionPostReqDto);
+        questionService.postQuestion(member, questionPostReqDto);
 
         return new BaseResponse();
     }
