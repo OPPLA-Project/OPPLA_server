@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -21,12 +22,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = request.getHeader("Authorization");
         System.out.println("로그인 시도");
-        System.out.println(authorizationHeader);
 
         if (authorizationHeader != null) {
             System.out.println("app token 존재 확인");
+            authorizationHeader = authorizationHeader.replaceAll("Bearer ", "");
+            /*if(Pattern.matches("Bearer ", authorizationHeader)) {
+                authorizationHeader = authorizationHeader.replaceAll("Bearer ", "");
+                System.out.println("if문 내 : " + authorizationHeader);
+            }*/
+
             AuthToken token = tokenProvider.convertAuthToken(authorizationHeader);
             if (token.validate()) {
                 Authentication authentication = tokenProvider.getAuthentication(authorizationHeader);
