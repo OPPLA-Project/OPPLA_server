@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,18 +28,17 @@ public class MemberService {
     private final AnswerRepository answerRepository;
     private final ReviewRepository reviewRepository;
 
-    public MemberProfileResDto forMemberProfile(Long memberId){
-        Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
-
+    public MemberProfileResDto forMemberProfile(Member currentMember, Long memberId){
+        Member targetMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         // 채택률
         // 답변 수
-        Integer answerNum = answerRepository.countByMemberId(member.getId());
+        Integer answerNum = answerRepository.countByMemberId(targetMember.getId());
         // 채택된 수
-        Integer selectionNum = answerRepository.countByMemberIdAndSelection(member.getId(), true);
+        Integer selectionNum = answerRepository.countByMemberIdAndSelection(targetMember.getId(), true);
         Double memberSelectionPercent = (Math.round((double) selectionNum / (double) answerNum * 100.0*100)/100.0);
 
         // 리뷰 평가
-        List<Review> memberReviewList = reviewRepository.findAllByMemberId(member.getId());
+        List<Review> memberReviewList = reviewRepository.findAllByMemberId(targetMember.getId());
         List<Integer> memberReviewCountList = Arrays.asList(0,0,0,0);
 
         memberReviewList.forEach(review -> {
@@ -70,15 +70,16 @@ public class MemberService {
 
 
         return MemberProfileResDto.builder()
-                .imgUrl(member.getProfileUrl())
-                .nickname(member.getNickname())
-                .point(member.getPoint())
-                .reviewScore(member.getReviewScore())
+                .imgUrl(targetMember.getProfileUrl())
+                .nickname(targetMember.getNickname())
+                .point(targetMember.getPoint())
+                .reviewScore(targetMember.getReviewScore())
                 .selectionPercent(memberSelectionPercent)
-                .intro(member.getIntro())
+                .intro(targetMember.getIntro())
                 .mainAnswerArea(null) // 지역을 어떻게 가져오지? Question에서 지역을 따로 관리하지 않음..
                 .infoScore(infoScoreResDto)
                 .answerSpeed(answerSpeedResDto)
+                .isMine(Objects.equals(currentMember.getId(), targetMember.getId()))
                 .build();
     }
 
