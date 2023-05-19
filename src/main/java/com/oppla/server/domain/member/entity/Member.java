@@ -36,24 +36,30 @@ public class Member extends TimeStamped {
     private String profileUrl;
 
     @Column(name = "review_score")
-    private Integer reviewScore;
+    @Builder.Default
+    private Integer reviewScore = 0;
 
     @Column
-    private Integer point;
+    @Builder.Default
+    private Integer point = 700;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    @Builder.Default
+    private Gender gender = Gender.NONE;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private MemberStatus status;
+    @Builder.Default
+    private MemberStatus status = MemberStatus.ACTIVE;
 
     @Column
-    private String intro;
+    @Builder.Default
+    private String intro = "";
 
     @Column
-    private Boolean question_TF;
+    @Builder.Default
+    private Boolean question_TF = Boolean.TRUE;
 
     public Member(String nickname, String email, String snsType, String profileUrl) {
         this.nickname = nickname;
@@ -70,5 +76,4 @@ public class Member extends TimeStamped {
         this.nickname = nickname;
         this.intro = intro;
     }
-
 }
