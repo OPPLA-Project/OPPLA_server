@@ -60,7 +60,7 @@ public class AnswerService {
                         .member(member)
                         .content(dto.getContent())
                         .selection(false)
-                .build()
+                        .build()
         );
 
 
