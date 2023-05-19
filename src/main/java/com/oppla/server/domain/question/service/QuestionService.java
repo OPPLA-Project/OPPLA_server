@@ -3,6 +3,7 @@ package com.oppla.server.domain.question.service;
 import com.oppla.server.domain.answer.entity.Answer;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.enums.Gender;
+import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class QuestionService {
                 Question.builder()
                         .member(member)
                         .locationName(questionPostReqDto.getLocationName())
-                        .laititude(questionPostReqDto.getLatitude())
+                        .latitude(questionPostReqDto.getLatitude())
                         .longitude(questionPostReqDto.getLongitude())
                         .title(questionPostReqDto.getTitle())
                         .content(questionPostReqDto.getContent())
@@ -31,5 +34,10 @@ public class QuestionService {
                         .selection(Boolean.FALSE)
                         .build()
         );
+    }
+
+
+    public List<QuestionListResDto> getQuestionList(Gender gender, Double lat, Double lng) {
+        return questionRepository.findQuestionByGenderAndLocation(gender, lat, lng);
     }
 }
