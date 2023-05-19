@@ -1,24 +1,26 @@
 package com.oppla.server.domain.member.service;
 
 import com.oppla.server.domain.answer.repository.AnswerRepository;
-import com.oppla.server.domain.member.dto.MemberNicknameDuplReqDto;
-import com.oppla.server.domain.member.dto.MemberNicknameDuplResDto;
-import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
-import com.oppla.server.domain.member.dto.MemberProfileResDto;
+import com.oppla.server.domain.member.dto.*;
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.entity.PointRecord;
 import com.oppla.server.domain.member.exception.MemberNotFoundException;
 import com.oppla.server.domain.member.repository.MemberRepository;
+import com.oppla.server.domain.member.repository.PointRecordRepository;
 import com.oppla.server.domain.review.entity.Review;
-import com.oppla.server.domain.review.entity.dto.AnswerSpeedResDto;
-import com.oppla.server.domain.review.entity.dto.InfoScoreResDto;
+import com.oppla.server.domain.review.dto.AnswerSpeedResDto;
+import com.oppla.server.domain.review.dto.InfoScoreResDto;
 import com.oppla.server.domain.review.repository.ReviewRepository;
+import com.oppla.server.global.common.response.PaginationResDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Objects;
 
 @Service
@@ -27,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AnswerRepository answerRepository;
     private final ReviewRepository reviewRepository;
+    private final PointRecordRepository pointRecordRepository;
 
     @Transactional
     public MemberProfileResDto forMemberProfile(Member currentMember, Long memberId){
@@ -102,5 +105,25 @@ public class MemberService {
     public void changeQuestionTF(Member member) {
         member.changeQuestionTF();
         memberRepository.save(member);
+    }
+
+    public PaginationResDto<MemberPointRecordResDto> forMemberPointRecord(Member member, Pageable pageable) {
+        Page<PointRecord> page = pointRecordRepository.getMemberPointRecordPage(member, pageable);
+
+        // PointRecord -> MemberPointRecordResDto 생성
+        List<MemberPointRecordResDto> dtoList =
+                page.stream()
+                        .map(pointRecord -> MemberPointRecordResDto.builder()
+                                                                    .description(pointRecord.getDescription())
+                                                                    .deal_point(pointRecord.getDeal_point())
+                                                                    .rest_point(pointRecord.getRest_point())
+                                                                    .build()
+                ).collect(Collectors.toList());
+
+        return PaginationResDto.<MemberPointRecordResDto>builder()
+                .page(page.getNumber())
+                .hasNext(page.hasNext())
+                .content(dtoList)
+                .build();
     }
 }

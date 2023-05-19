@@ -1,15 +1,14 @@
 package com.oppla.server.domain.member.controller;
 
-import com.oppla.server.domain.member.dto.MemberNicknameDuplReqDto;
-import com.oppla.server.domain.member.dto.MemberNicknameDuplResDto;
-import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
-import com.oppla.server.domain.member.dto.MemberProfileResDto;
+import com.oppla.server.domain.member.dto.*;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.service.MemberService;
 import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
+import com.oppla.server.global.common.response.PaginationResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +49,7 @@ public class MemberController {
             description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
     )
     @GetMapping("/member/nickname/duplication")
-    public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(MemberNicknameDuplReqDto dto){
+    public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(@RequestBody MemberNicknameDuplReqDto dto){
 
         return BaseDataResponse.<MemberNicknameDuplResDto>builder()
                 .result(memberService.checkMemberNickname(dto))
@@ -59,13 +58,29 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "유저 닉네임 중복 검사",
-            description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
+            summary = "*유저의 질문 알림 여부를 변경",
+            description = "유저가 질문 알림을 받는 상태를 수정" +
+                    "\n Member Id Token 필요"
     )
     @PatchMapping("/member/question-tf")
     public BaseResponse changeQuestionTF(@AuthenticationPrincipal Member member){
         memberService.changeQuestionTF(member);
         return new BaseResponse();
+    }
 
+    @Operation(
+            summary = "유저의 거래내역 조회",
+            description = "유저의 포인트 거래내역 조회" +
+                    "\n Member Id Token 필요" +
+                    "\n Pagination 적용" +
+                    "\n size: 한번에 받을 개수" +
+                    "\n page: 0부터 시작"
+    )
+    @GetMapping("/member/point-record")
+    public BaseDataResponse<PaginationResDto<MemberPointRecordResDto>> getMemberPointRecord(@AuthenticationPrincipal Member member, Pageable pageable){
+
+        return BaseDataResponse.<PaginationResDto<MemberPointRecordResDto>>builder()
+                .result(memberService.forMemberPointRecord(member, pageable))
+                .build();
     }
 }

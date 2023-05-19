@@ -1,4 +1,4 @@
-package com.oppla.server.domain.review.entity.dto;
+package com.oppla.server.domain.review.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
