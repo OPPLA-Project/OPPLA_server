@@ -71,4 +71,9 @@ public class Member extends TimeStamped {
     public void changePoint(Integer point){
         this.point = point;
     }
+
+    public void changeUserProfile(String nickname, String intro){
+        this.nickname = nickname;
+        this.intro = intro;
+    }
 }

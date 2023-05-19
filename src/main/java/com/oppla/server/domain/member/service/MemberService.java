@@ -1,6 +1,9 @@
 package com.oppla.server.domain.member.service;
 
 import com.oppla.server.domain.answer.repository.AnswerRepository;
+import com.oppla.server.domain.member.dto.MemberNicknameDuplReqDto;
+import com.oppla.server.domain.member.dto.MemberNicknameDuplResDto;
+import com.oppla.server.domain.member.dto.MemberProfilePatchReqDto;
 import com.oppla.server.domain.member.dto.MemberProfileResDto;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.exception.MemberNotFoundException;
@@ -11,6 +14,7 @@ import com.oppla.server.domain.review.entity.dto.InfoScoreResDto;
 import com.oppla.server.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +28,7 @@ public class MemberService {
     private final AnswerRepository answerRepository;
     private final ReviewRepository reviewRepository;
 
+    @Transactional
     public MemberProfileResDto forMemberProfile(Member currentMember, Long memberId){
         Member targetMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         // 채택률
@@ -76,6 +81,20 @@ public class MemberService {
                 .infoScore(infoScoreResDto)
                 .answerSpeed(answerSpeedResDto)
                 .isMine(Objects.equals(currentMember.getId(), targetMember.getId()))
+                .build();
+    }
+
+    @Transactional
+    public void changeMemberProfile(Member member, MemberProfilePatchReqDto dto) {
+        member.changeUserProfile(dto.getNickname(), dto.getIntro());
+        memberRepository.save(member);
+    }
+
+    public MemberNicknameDuplResDto checkMemberNickname(MemberNicknameDuplReqDto dto) {
+        Boolean nicknameStatus = memberRepository.existsByNickname(dto.getNickname());
+
+        return MemberNicknameDuplResDto.builder()
+                .duplicationStatus(nicknameStatus)
                 .build();
     }
 }
