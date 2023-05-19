@@ -37,5 +37,7 @@ public class MemberProfileResDto {
     private InfoScoreResDto infoScore;
     @Schema(description = "멤버의 답변 속도")
     private AnswerSpeedResDto answerSpeed;
+    @Schema(description = "현재 멤버인지 확인")
+    private Boolean isMine;
 
 }
