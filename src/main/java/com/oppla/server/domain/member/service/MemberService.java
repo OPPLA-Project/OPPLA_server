@@ -28,6 +28,7 @@ public class MemberService {
     private final AnswerRepository answerRepository;
     private final ReviewRepository reviewRepository;
 
+    @Transactional
     public MemberProfileResDto forMemberProfile(Member currentMember, Long memberId){
         Member targetMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         // 채택률
