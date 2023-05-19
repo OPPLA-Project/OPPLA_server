@@ -76,4 +76,9 @@ public class Member extends TimeStamped {
         this.nickname = nickname;
         this.intro = intro;
     }
+
+    public void changeQuestionTF(){
+        this.question_TF = !this.question_TF;
+    }
+
 }

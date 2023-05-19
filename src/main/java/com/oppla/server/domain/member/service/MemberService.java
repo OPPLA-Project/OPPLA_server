@@ -97,4 +97,10 @@ public class MemberService {
                 .duplicationStatus(nicknameStatus)
                 .build();
     }
+
+    @Transactional
+    public void changeQuestionTF(Member member) {
+        member.changeQuestionTF();
+        memberRepository.save(member);
+    }
 }
