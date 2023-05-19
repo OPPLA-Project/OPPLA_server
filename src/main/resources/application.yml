@@ -8,7 +8,10 @@ spring:
     group:
       local:
         - db-local
+        - common
       dev:
         - db-dev
+        - common
     include:
       - db
+      - common
