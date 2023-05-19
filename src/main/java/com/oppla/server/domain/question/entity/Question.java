@@ -28,7 +28,7 @@ public class Question extends TimeStamped {
     private String locationName;
 
     @Column
-    private Double laititude;
+    private Double latitude;
 
     @Column
     private Double longitude;
