@@ -35,7 +35,7 @@ public class MemberController {
             summary = "유저 프로필 수정",
             description = "유저의 닉네임과, 한줄 소개를 수정" +
                     "\n 닉네임과 한줄 소개 모두 데이터가 있어야햠." +
-                    "\n 닉네임만 수정하는 경우 한줄 소개에는 old 데이터가 와야함."
+                    "\n 닉네임만 수정하는 경우 한줄 소개에는 Old 데이터가 와야함."
     )
     @PatchMapping("/member")
     public BaseResponse patchMemberProfile(@AuthenticationPrincipal Member member, @RequestBody MemberProfilePatchReqDto dto){
