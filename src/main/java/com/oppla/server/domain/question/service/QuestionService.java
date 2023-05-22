@@ -1,15 +1,14 @@
 package com.oppla.server.domain.question.service;
 
-import com.oppla.server.domain.answer.entity.Answer;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.enums.Gender;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
+import com.oppla.server.domain.question.dto.QuestionSpecResDto;
 import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
+import com.oppla.server.domain.question.exception.QuestionNotFoundException;
 import com.oppla.server.domain.question.repository.QuestionRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +38,12 @@ public class QuestionService {
 
     public List<QuestionListResDto> getQuestionList(Gender gender, Double lat, Double lng) {
         return questionRepository.findQuestionByGenderAndLocation(gender, lat, lng);
+    }
+
+    public QuestionSpecResDto getQuestionSpec(Long questionId) {
+        Question question = questionRepository.findById(questionId).orElseThrow(
+                () -> new QuestionNotFoundException());
+
+        return new QuestionSpecResDto(question);
     }
 }
