@@ -1,11 +1,8 @@
 package com.oppla.server.domain.question.repository.impl;
 
 import com.oppla.server.domain.member.enums.Gender;
-import com.oppla.server.domain.question.entity.Question;
-import com.oppla.server.domain.question.dto.QQuestionListResDto;
-import com.oppla.server.domain.question.dto.QQuestionSpecResDto;
-import com.oppla.server.domain.question.dto.QuestionListResDto;
-import com.oppla.server.domain.question.dto.QuestionSpecResDto;
+import com.oppla.server.domain.question.dto.QQuestionResDto;
+import com.oppla.server.domain.question.dto.QuestionResDto;
 import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.querydsl.core.types.dsl.MathExpressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -22,9 +19,9 @@ public class QuestionRepositoryImpl implements QuestionDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<QuestionListResDto> findQuestionByGenderAndLocation(Gender gender, Double latitude, Double longitude) {
+    public List<QuestionResDto> findQuestionByGenderAndLocation(Gender gender, Double latitude, Double longitude) {
         return jpaQueryFactory
-                .select(new QQuestionListResDto(question))
+                .select(new QQuestionResDto(question))
                 .from(question)
                 .where(question.status.eq(QuestionStatus.ACTIVE))
                 .where(question.gender.eq(gender))

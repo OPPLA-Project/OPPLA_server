@@ -2,9 +2,8 @@ package com.oppla.server.domain.question.controller;
 
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.question.dto.QuestionListByMeResDto;
-import com.oppla.server.domain.question.dto.QuestionListResDto;
+import com.oppla.server.domain.question.dto.QuestionResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
-import com.oppla.server.domain.question.dto.QuestionSpecResDto;
 import com.oppla.server.domain.question.service.QuestionService;
 import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
@@ -38,11 +37,9 @@ public class QuestionController {
             description = "주변 질문 목록 API"
     )
     @GetMapping("/around")
-    public BaseDataResponse<List<QuestionListResDto>> aroundQuestion(@Parameter(hidden = true) @AuthenticationPrincipal Member member,
-                                                                     @RequestParam("lat") Double latitude, @RequestParam("lng") Double longitude) {
-        List<QuestionListResDto> aroundQuestionList = questionService.getQuestionList(member.getGender(), latitude, longitude);
-
-        return new BaseDataResponse<>(aroundQuestionList);
+    public BaseDataResponse<List<QuestionResDto>> aroundQuestion(@Parameter(hidden = true) @AuthenticationPrincipal Member member,
+                                                                 @RequestParam("lat") Double latitude, @RequestParam("lng") Double longitude) {
+        return new BaseDataResponse<>(questionService.getQuestionList(member.getGender(), latitude, longitude));
     }
 
     @Operation(
@@ -50,10 +47,8 @@ public class QuestionController {
             description = "질문 상세보기 API"
     )
     @GetMapping("/spec/{questionId}")
-    public BaseDataResponse<QuestionSpecResDto> questionSpec(@PathVariable("questionId") Long questionId) {
-        QuestionSpecResDto questionSpec = questionService.getQuestionSpec(questionId);
-
-        return new BaseDataResponse<>(questionSpec);
+    public BaseDataResponse<QuestionResDto> questionSpec(@PathVariable("questionId") Long questionId) {
+        return new BaseDataResponse<>(questionService.getQuestionSpec(questionId));
     }
   
     @Operation(
