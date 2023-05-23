@@ -55,7 +55,7 @@ public class QuestionController {
 
         return new BaseDataResponse<>(questionSpec);
     }
-
+  
     @Operation(
             summary = "내가 한 질문 보기",
             description = "내가 한 질문 보기 API"

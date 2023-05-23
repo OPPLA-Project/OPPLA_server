@@ -29,6 +29,7 @@ public class QuestionSpecResDto {
     @Schema(description = "남은 시간(분)")
     private Long restMinute;
 
+    @QueryProjection
     public QuestionSpecResDto(Question question) {
         this.questionId = question.getId();
         this.locationName = question.getLocationName();
