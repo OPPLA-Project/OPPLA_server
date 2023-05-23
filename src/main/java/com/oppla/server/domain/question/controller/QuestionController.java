@@ -1,9 +1,9 @@
 package com.oppla.server.domain.question.controller;
 
 import com.oppla.server.domain.member.entity.Member;
-import com.oppla.server.domain.member.repository.MemberRepository;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
+import com.oppla.server.domain.question.dto.QuestionSpecResDto;
 import com.oppla.server.domain.question.service.QuestionService;
 import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
@@ -14,7 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,5 +42,16 @@ public class QuestionController {
         List<QuestionListResDto> aroundQuestionList = questionService.getQuestionList(member.getGender(), latitude, longitude);
 
         return new BaseDataResponse<>(aroundQuestionList);
+    }
+
+    @Operation(
+            summary = "질문 상세 보기",
+            description = "질문 상세보기 API"
+    )
+    @GetMapping("/spec/{questionId}")
+    public BaseDataResponse<QuestionSpecResDto> questionSpec(@PathVariable("questionId") Long questionId) {
+        QuestionSpecResDto questionSpec = questionService.getQuestionSpec(questionId);
+
+        return new BaseDataResponse<>(questionSpec);
     }
 }
