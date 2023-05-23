@@ -1,10 +1,8 @@
 package com.oppla.server.domain.question.repository.impl;
 
 import com.oppla.server.domain.member.enums.Gender;
-import com.oppla.server.domain.question.dto.QQuestionListResDto;
-import com.oppla.server.domain.question.dto.QQuestionSpecResDto;
-import com.oppla.server.domain.question.dto.QuestionListResDto;
-import com.oppla.server.domain.question.dto.QuestionSpecResDto;
+import com.oppla.server.domain.question.dto.*;
+import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.querydsl.core.types.dsl.MathExpressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -30,6 +28,12 @@ public class QuestionRepositoryImpl implements QuestionDslRepository {
                 .where(calculateDistance(latitude, longitude, question.latitude, question.longitude).loe(0.5))
                 .orderBy(calculateDistance(latitude, longitude, question.latitude, question.longitude).asc())
                 .fetch();
+    }
+
+    @Override
+    public List<Question> findByMemberId(Long id) {
+        return jpaQueryFactory
+
     }
 
     private NumberExpression<Double> calculateDistance(Double doubleLat1, Double doubleLong1,

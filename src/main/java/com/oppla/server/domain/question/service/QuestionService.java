@@ -2,6 +2,7 @@ package com.oppla.server.domain.question.service;
 
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.enums.Gender;
+import com.oppla.server.domain.question.dto.QuestionListByMeResDto;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.dto.QuestionSpecResDto;
@@ -45,5 +46,9 @@ public class QuestionService {
                 () -> new QuestionNotFoundException());
 
         return new QuestionSpecResDto(question);
+    }
+
+    public List<QuestionListByMeResDto> getMyQuestionList(Member member) {
+        List<Question> myQuestionList = questionRepository.findByMemberId(member.getId());
     }
 }
