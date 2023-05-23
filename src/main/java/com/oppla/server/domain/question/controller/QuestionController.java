@@ -1,6 +1,7 @@
 package com.oppla.server.domain.question.controller;
 
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.question.dto.QuestionListByMeResDto;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
 import com.oppla.server.domain.question.dto.QuestionSpecResDto;
@@ -53,5 +54,14 @@ public class QuestionController {
         QuestionSpecResDto questionSpec = questionService.getQuestionSpec(questionId);
 
         return new BaseDataResponse<>(questionSpec);
+    }
+  
+    @Operation(
+            summary = "내가 한 질문 보기",
+            description = "내가 한 질문 보기 API"
+    )
+    @GetMapping("/list")
+    public BaseDataResponse<List<QuestionListByMeResDto>> myQuestionList(@Parameter(hidden = true) @AuthenticationPrincipal Member member) {
+        return new BaseDataResponse<>(questionService.getMyQuestionList(member));
     }
 }
