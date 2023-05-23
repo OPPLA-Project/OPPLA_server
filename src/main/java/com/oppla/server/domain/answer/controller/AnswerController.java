@@ -22,8 +22,9 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @Operation(
-            summary = "답변 등록",
-            description = "답변 등록 API"
+            summary = "*답변 등록",
+            description = "답변 등록 API" +
+                    "\n Member Id Token 필요"
     )
     @PostMapping("")
     public BaseResponse postAnswer(@AuthenticationPrincipal Member member, @RequestBody AnswerPostReqDto dto){
