@@ -3,11 +3,19 @@ package com.oppla.server.domain.question.dto;
 import com.oppla.server.domain.question.entity.Question;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class QuestionSpecResDto {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class QuestionResDto {
     @Schema(description = "질문 Id")
     private Long questionId;
 
@@ -30,7 +38,7 @@ public class QuestionSpecResDto {
     private Long restMinute;
 
     @QueryProjection
-    public QuestionSpecResDto(Question question) {
+    public QuestionResDto(Question question) {
         this.questionId = question.getId();
         this.locationName = question.getLocationName();
         this.latitude = question.getLatitude();

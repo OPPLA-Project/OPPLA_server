@@ -4,9 +4,8 @@ import com.oppla.server.domain.answer.repository.AnswerRepository;
 import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.domain.member.enums.Gender;
 import com.oppla.server.domain.question.dto.QuestionListByMeResDto;
-import com.oppla.server.domain.question.dto.QuestionListResDto;
+import com.oppla.server.domain.question.dto.QuestionResDto;
 import com.oppla.server.domain.question.dto.QuestionPostReqDto;
-import com.oppla.server.domain.question.dto.QuestionSpecResDto;
 import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.oppla.server.domain.question.exception.QuestionNotFoundException;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.oppla.server.domain.question.entity.QQuestion.question;
 
 @Service
 @RequiredArgsConstructor
@@ -43,15 +40,15 @@ public class QuestionService {
     }
 
 
-    public List<QuestionListResDto> getQuestionList(Gender gender, Double lat, Double lng) {
+    public List<QuestionResDto> getQuestionList(Gender gender, Double lat, Double lng) {
         return questionRepository.findQuestionByGenderAndLocation(gender, lat, lng);
     }
 
-    public QuestionSpecResDto getQuestionSpec(Long questionId) {
+    public QuestionResDto getQuestionSpec(Long questionId) {
         Question question = questionRepository.findById(questionId).orElseThrow(
                 () -> new QuestionNotFoundException());
 
-        return new QuestionSpecResDto(question);
+        return new QuestionResDto(question);
     }
 
     public List<QuestionListByMeResDto> getMyQuestionList(Member member) {
