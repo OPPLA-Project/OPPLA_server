@@ -1,6 +1,7 @@
 package com.oppla.server.domain.question.repository.impl;
 
 import com.oppla.server.domain.member.enums.Gender;
+import com.oppla.server.domain.question.entity.Question;
 import com.oppla.server.domain.question.dto.QQuestionListResDto;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
 import com.oppla.server.domain.question.enums.QuestionStatus;
