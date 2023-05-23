@@ -2,9 +2,7 @@ package com.oppla.server.domain.question.repository.impl;
 
 import com.oppla.server.domain.member.enums.Gender;
 import com.oppla.server.domain.question.dto.QQuestionListResDto;
-import com.oppla.server.domain.question.dto.QQuestionSpecResDto;
 import com.oppla.server.domain.question.dto.QuestionListResDto;
-import com.oppla.server.domain.question.dto.QuestionSpecResDto;
 import com.oppla.server.domain.question.enums.QuestionStatus;
 import com.querydsl.core.types.dsl.MathExpressions;
 import com.querydsl.core.types.dsl.NumberExpression;
