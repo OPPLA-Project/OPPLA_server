@@ -10,6 +10,4 @@ import java.util.List;
 
 public interface QuestionDslRepository {
     List<QuestionListResDto> findQuestionByGenderAndLocation(Gender gender, Double latitude, Double longitude);
-
-    List<Question> findByMemberId(Long id);
 }

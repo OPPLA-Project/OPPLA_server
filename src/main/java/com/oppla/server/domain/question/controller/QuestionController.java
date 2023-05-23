@@ -60,9 +60,8 @@ public class QuestionController {
             summary = "내가 한 질문 보기",
             description = "내가 한 질문 보기 API"
     )
-    @GetMapping("/list}")
+    @GetMapping("/list")
     public BaseDataResponse<List<QuestionListByMeResDto>> myQuestionList(@Parameter(hidden = true) @AuthenticationPrincipal Member member) {
-
         return new BaseDataResponse<>(questionService.getMyQuestionList(member));
     }
 }

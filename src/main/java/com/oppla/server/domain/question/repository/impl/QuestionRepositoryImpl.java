@@ -30,12 +30,6 @@ public class QuestionRepositoryImpl implements QuestionDslRepository {
                 .fetch();
     }
 
-    @Override
-    public List<Question> findByMemberId(Long id) {
-        return jpaQueryFactory
-
-    }
-
     private NumberExpression<Double> calculateDistance(Double doubleLat1, Double doubleLong1,
                                                        NumberPath<Double> latitude2, NumberPath<Double> longitude2) {
         NumberExpression<Double> latitude1 = latitude2.divide(latitude2).multiply(doubleLat1);
