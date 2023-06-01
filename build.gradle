@@ -84,13 +84,3 @@ clean {
 jar {
 	enabled = false
 }
-
-ext.profile = (!project.hasProperty('profile') || !profile) ? 'db-local' : profile
-
-sourceSets {
-	main {
-		resources {
-			srcDirs "src/main/resources", "src/main/resources-${profile}"
-		}
-	}
-}
