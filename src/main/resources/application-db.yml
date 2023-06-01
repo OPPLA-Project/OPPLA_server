@@ -40,6 +40,6 @@ spring:
       ddl-auto: create
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${{ secrets.AWS_RDS_USERNAME }}
-    url: ${{ secrets.AWS_RDS_URL }}
-    password: ${{ secrets.AWS_RDS_PASSWORD }}
+    username: ${AWS_RDS_USERNAME}
+    url: ${AWS_RDS_URL}
+    password: ${AWS_RDS_PASSWORD}
