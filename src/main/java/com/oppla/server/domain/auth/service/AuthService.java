@@ -1,5 +1,6 @@
 package com.oppla.server.domain.auth.service;
 
+import antlr.TokenStreamRewriteEngine;
 import com.oppla.server.domain.auth.client.ClientKakao;
 import com.oppla.server.domain.auth.dto.AuthReqDto;
 import com.oppla.server.domain.auth.dto.AuthToken;
@@ -38,5 +39,8 @@ public class AuthService {
         }
 
         return appToken;
+    }
+    public AuthToken getTestJWT(Long memberId) {
+        return tokenProvider.createAppToken(memberId, Role.USER);
     }
 }
