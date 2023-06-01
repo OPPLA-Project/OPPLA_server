@@ -13,8 +13,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
 
     @Bean
     public OpenAPI api() {
@@ -22,7 +23,7 @@ public class SwaggerConfig {
                 .version("v1.0.0 [Beta]")
                 .title("OPPLA")
                 .description("OPPLA API Swagger " +
-                        "\nnow Profiles Active: " + activeProfile);
+                        "\nnow Profiles Active: " + dbUsername);
 
         // Authentication
         String jwtSchemeName = "AccessToken";
