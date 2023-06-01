@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -16,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuestionListResDto {
+public class QuestionResDto {
     @Schema(description = "질문 Id")
     private Long questionId;
 
@@ -32,16 +31,20 @@ public class QuestionListResDto {
     @Schema(description = "질문 제목")
     private String title;
 
+    @Schema(description = "질문 내용")
+    private String content;
+
     @Schema(description = "남은 시간(분)")
     private Long restMinute;
 
     @QueryProjection
-    public QuestionListResDto(Question question) {
+    public QuestionResDto(Question question) {
         this.questionId = question.getId();
         this.locationName = question.getLocationName();
         this.latitude = question.getLatitude();
         this.longitude = question.getLongitude();
         this.title = question.getTitle();
+        this.content = question.getContent();
         this.restMinute = calculateRestMinute(question.getFinishTime());
     }
 

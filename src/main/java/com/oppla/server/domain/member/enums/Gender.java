@@ -9,7 +9,6 @@ public enum Gender {
     WOMAN("woman"),
     NONE("none");
 
-    @Getter
     private final String gender;
 
     Gender (String gender) {

@@ -10,4 +10,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>, AnswerRep
     Integer countByMemberId(Long id);
 
     Integer countByMemberIdAndSelection(Long id, boolean b);
+
+    Integer countByQuestionId(Long id);
 }
