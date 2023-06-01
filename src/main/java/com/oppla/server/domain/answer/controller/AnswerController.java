@@ -7,6 +7,7 @@ import com.oppla.server.domain.member.entity.Member;
 import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +28,7 @@ public class AnswerController {
                     "\n Member Id Token 필요"
     )
     @PostMapping("")
-    public BaseResponse postAnswer(@AuthenticationPrincipal Member member, @RequestBody AnswerPostReqDto dto){
+    public BaseResponse postAnswer(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @RequestBody AnswerPostReqDto dto){
         answerService.postAnswer(member, dto);
 
         return new BaseResponse();
