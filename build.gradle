@@ -56,6 +56,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+tasks {
+
+	processResources {
+		duplicatesStrategy = DuplicatesStrategy.INCLUDE
+	}
+}
 
 // Querydsl 설정부
 def querydslDir = "$buildDir/generated/querydsl"
