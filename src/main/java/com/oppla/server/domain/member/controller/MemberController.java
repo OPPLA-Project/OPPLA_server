@@ -46,7 +46,7 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "유저 닉네임 중복 검사",
+            summary = "유저 닉네임 중복 검사 ",
             description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
     )
     @GetMapping("/member/nickname/duplication")
