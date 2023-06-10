@@ -1,6 +1,7 @@
 package com.oppla.server.domain.auth.service;
 
 import com.oppla.server.domain.auth.client.ClientKakao;
+import com.oppla.server.domain.auth.client.ClientNaver;
 import com.oppla.server.domain.auth.dto.AuthReqDto;
 import com.oppla.server.domain.auth.dto.AuthToken;
 import com.oppla.server.domain.auth.dto.Role;
@@ -20,23 +21,35 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
     private final ClientKakao clientKakao;
+    private final ClientNaver clientNaver;
     private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        AuthToken appToken;
         Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
 
         if(!isMember.isPresent()) {
             memberRepository.save(member);
-            appToken = tokenProvider.createAppToken(member.getId(), Role.USER);
+            return tokenProvider.createAppToken(member.getId(), Role.USER);
         } else if (!isMember.get().getSnsType().equals(SnsType.KAKAO.toString())) {
             throw new OtherSnsTypeException();
         } else {
-            appToken = tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
+            return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }
+    }
 
-        return appToken;
+    public AuthToken naverLogin(AuthReqDto authReqDto) {
+        Member member = clientNaver.getUserData(authReqDto.getAccessToken());
+        Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+
+        if(!isMember.isPresent()) {
+            memberRepository.save(member);
+            return tokenProvider.createAppToken(member.getId(), Role.USER);
+        } else if (!isMember.get().getSnsType().equals(SnsType.NAVER.toString())) {
+            throw new OtherSnsTypeException();
+        } else {
+            return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
+        }
     }
 }

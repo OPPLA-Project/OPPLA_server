@@ -28,4 +28,16 @@ public class AuthController {
                 .appToken(authService.kakaoLogin(authReqDto).getToken())
                 .build());
     }
+
+    @Operation(summary = "네이버 로그인", description = "네이버 계정으로 로그인 및 회원가입")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "소셜 로그인 성공")
+    })
+    @ResponseBody
+    @PostMapping ("/naver")
+    public BaseDataResponse<AuthResponse> naverAuth(@RequestBody AuthReqDto authReqDto) {
+        return new BaseDataResponse<>(AuthResponse.builder()
+                .appToken(authService.naverLogin(authReqDto).getToken())
+                .build());
+    }
 }
