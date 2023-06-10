@@ -6,6 +6,7 @@ import com.oppla.server.domain.auth.dto.KakaoMemberResDto;
 import com.oppla.server.domain.auth.dto.SnsType;
 import com.oppla.server.domain.auth.exception.TokenValidFailedException;
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.enums.Gender;
 import com.oppla.server.domain.member.repository.GradeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -72,6 +73,7 @@ public class ClientKakao {
                     .email(kakaoMemberResDto.getKakao_account().getEmail())
                     .profileUrl(kakaoMemberResDto.getKakao_account().getProfile().getProfile_image_url())
                     .grade(gradeRepository.findById(1L).get())
+                    .gender(Gender.from(kakaoMemberResDto.getKakao_account().getGender(), SnsType.KAKAO))
                     .build();
         } catch(URISyntaxException e) {
             throw new IllegalArgumentException();

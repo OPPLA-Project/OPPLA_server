@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoMemberResDto {
-    private Long id;
+    //private Long id;
     //private Properties properties;
     private KakaoAccount kakao_account;
 
