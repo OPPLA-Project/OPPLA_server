@@ -7,7 +7,6 @@ import com.oppla.server.global.common.response.BaseDataResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +37,17 @@ public class AuthController {
     public BaseDataResponse<AuthResponse> naverAuth(@RequestBody AuthReqDto authReqDto) {
         return new BaseDataResponse<>(AuthResponse.builder()
                 .appToken(authService.naverLogin(authReqDto).getToken())
+                .build());
+    }
+
+    @Operation(summary = "JWT 토큰 임시 발급", description = "Test를 토큰 위한 임시 발급 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "소셜 로그인 성공")
+    })
+    @GetMapping ("/test/{memberId}")
+    public BaseDataResponse<AuthResponse> testAuth(@PathVariable(name = "memberId") Long memberId) {
+        return new BaseDataResponse<>(AuthResponse.builder()
+                .appToken(authService.getTestJWT(memberId).getToken())
                 .build());
     }
 }

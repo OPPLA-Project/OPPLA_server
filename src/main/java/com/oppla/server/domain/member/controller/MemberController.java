@@ -7,6 +7,7 @@ import com.oppla.server.global.common.response.BaseDataResponse;
 import com.oppla.server.global.common.response.BaseResponse;
 import com.oppla.server.global.common.response.PaginationResDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +24,7 @@ public class MemberController {
                     "\n 자신의 페이지인지 확인하기 위해 Member Id Token 필요"
     )
     @GetMapping("/member/{memberId}")
-    public BaseDataResponse<MemberProfileResDto> getMemberProfile(@AuthenticationPrincipal Member member,  @PathVariable("memberId") Long memberId){
+    public BaseDataResponse<MemberProfileResDto> getMemberProfile(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @PathVariable("memberId") Long memberId){
 
         return BaseDataResponse.<MemberProfileResDto>builder()
                 .result(memberService.forMemberProfile(member, memberId))
@@ -38,7 +39,7 @@ public class MemberController {
                     "\n 닉네임만 수정하는 경우 한줄 소개에는 Old 데이터가 와야함."
     )
     @PatchMapping("/member")
-    public BaseResponse patchMemberProfile(@AuthenticationPrincipal Member member, @RequestBody MemberProfilePatchReqDto dto){
+    public BaseResponse patchMemberProfile(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @RequestBody MemberProfilePatchReqDto dto){
         memberService.changeMemberProfile(member, dto);
         return new BaseResponse();
 
@@ -63,7 +64,7 @@ public class MemberController {
                     "\n Member Id Token 필요"
     )
     @PatchMapping("/member/question-tf")
-    public BaseResponse changeQuestionTF(@AuthenticationPrincipal Member member){
+    public BaseResponse changeQuestionTF(@Parameter(hidden = true) @AuthenticationPrincipal Member member){
         memberService.changeQuestionTF(member);
         return new BaseResponse();
     }
@@ -77,7 +78,7 @@ public class MemberController {
                     "\n page: 0부터 시작"
     )
     @GetMapping("/member/point-record")
-    public BaseDataResponse<PaginationResDto<MemberPointRecordResDto>> getMemberPointRecord(@AuthenticationPrincipal Member member, Pageable pageable){
+    public BaseDataResponse<PaginationResDto<MemberPointRecordResDto>> getMemberPointRecord(@Parameter(hidden = true) @AuthenticationPrincipal Member member, Pageable pageable){
 
         return BaseDataResponse.<PaginationResDto<MemberPointRecordResDto>>builder()
                 .result(memberService.forMemberPointRecord(member, pageable))

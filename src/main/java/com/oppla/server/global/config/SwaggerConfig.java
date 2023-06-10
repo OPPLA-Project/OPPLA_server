@@ -6,19 +6,24 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
 public class SwaggerConfig {
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
 
     @Bean
     public OpenAPI api() {
         Info info = new Info()
                 .version("v1.0.0 [Beta]")
                 .title("OPPLA")
-                .description("OPPLA API Swagger");
+                .description("OPPLA API Swagger " +
+                        "\nnow Profiles Active: " + dbUsername);
 
         // Authentication
         String jwtSchemeName = "AccessToken";
