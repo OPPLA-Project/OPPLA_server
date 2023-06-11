@@ -9,18 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoMemberResDto {
-    //private Long id;
-    //private Properties properties;
+    private Long id;
     private KakaoAccount kakao_account;
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Properties {
-        private String nickname;
-        private String profile_image;
-        private String is_default_image;
-    }
 
     @Data
     @NoArgsConstructor

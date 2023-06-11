@@ -24,7 +24,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Component
 public class TokenProvider {
-    private Long expiry = 356L*(1000*60*60*24);
+    private Long expiry = 365L*(1000*60*60*24);
     private MemberDetailService memberDetailService;
     private final Key key;
     //@Value("${auth.jwt.tokenSecret}")
