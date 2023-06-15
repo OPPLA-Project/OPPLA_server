@@ -84,4 +84,18 @@ public class MemberController {
                 .result(memberService.forMemberPointRecord(member, pageable))
                 .build();
     }
+    @Operation(
+            summary = "유저의 현재 위치 설정",
+            description = "유저의 현재 위치를 설정하는 기능" +
+                    "\n Member Id Token 필요" +
+                    "\n 등록되어 있는 정보가 있으면 변경, 없다면 등록."
+    )
+    @PatchMapping("/member/location")
+    public BaseDataResponse<NowLocationResDto> patchMemberLocation(@Parameter(hidden = true) @AuthenticationPrincipal Member member,
+                                                                   @RequestBody NowLocationReqDto dto){
+
+        return BaseDataResponse.<NowLocationResDto>builder()
+                .result(memberService.patchMemberLocation(member, dto))
+                .build();
+    }
 }
