@@ -28,4 +28,11 @@ public class NowLocation extends TimeStamped {
 
     @Column
     private Long longitude;
+
+    public void changeLatitude(Long latitude){
+        this.latitude = latitude;
+    }
+    public void changeLongitude(Long longitude){
+        this.longitude = longitude;
+    }
 }
