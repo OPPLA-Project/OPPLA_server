@@ -1,1 +1,17 @@
-
+spring:
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active:
+      - local
+    group:
+      local:
+        - db-local
+        - common
+      dev:
+        - db-dev
+        - common
+    include:
+      - db
+      - common
