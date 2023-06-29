@@ -9,6 +9,7 @@ import com.oppla.server.domain.auth.dto.Role;
 import com.oppla.server.domain.auth.dto.SnsType;
 import com.oppla.server.domain.auth.exception.OtherSnsTypeException;
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.enums.MemberStatus;
 import com.oppla.server.domain.member.repository.MemberRepository;
 
 import com.oppla.server.global.jwt.TokenProvider;
@@ -28,13 +29,15 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
+            if(memberRepository.existsByEmail(member.getEmail())) {
+                throw new OtherSnsTypeException();
+            }
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
-        } else if (!isMember.get().getSnsType().equals(SnsType.KAKAO.toString())) {
-            throw new OtherSnsTypeException();
         } else {
             return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }
@@ -42,18 +45,26 @@ public class AuthService {
 
     public AuthToken naverLogin(AuthReqDto authReqDto) {
         Member member = clientNaver.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
+            if(memberRepository.existsByEmail(member.getEmail())) {
+                throw new OtherSnsTypeException();
+            }
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
-        } else if (!isMember.get().getSnsType().equals(SnsType.NAVER.toString())) {
-            throw new OtherSnsTypeException();
         } else {
             return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }
     }
     public AuthToken getTestJWT(Long memberId) {
         return tokenProvider.createAppToken(memberId, Role.USER);
+    }
+
+    @Transactional
+    public void withdrawal(Member member) {
+        member.changeStatus();
+        memberRepository.save(member);
     }
 }

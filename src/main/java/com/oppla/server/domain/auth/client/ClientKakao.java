@@ -68,6 +68,7 @@ public class ClientKakao {
             log.info(kakaoMemberResDto.getKakao_account().getProfile().getIs_default_image());
 
             return Member.builder()
+                    .snsMemberId(kakaoMemberResDto.getId().toString())
                     .snsType(SnsType.KAKAO.toString())
                     .nickname(kakaoMemberResDto.getKakao_account().getProfile().getNickname())
                     .email(kakaoMemberResDto.getKakao_account().getEmail())

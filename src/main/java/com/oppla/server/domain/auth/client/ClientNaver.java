@@ -41,6 +41,7 @@ public class ClientNaver {
                     .block();
 
             return Member.builder()
+                    .snsMemberId(naverMemberResDto.getResponse().getId())
                     .snsType(SnsType.NAVER.toString())
                     .nickname(naverMemberResDto.getResponse().getName())
                     .email(naverMemberResDto.getResponse().getEmail())
