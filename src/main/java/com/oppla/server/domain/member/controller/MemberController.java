@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
 
@@ -23,7 +24,7 @@ public class MemberController {
             description = "특정 유저의 마이페이지 보기" +
                     "\n 자신의 페이지인지 확인하기 위해 Member Id Token 필요"
     )
-    @GetMapping("/member/{memberId}")
+    @GetMapping("/{memberId}")
     public BaseDataResponse<MemberProfileResDto> getMemberProfile(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @PathVariable("memberId") Long memberId){
 
         return BaseDataResponse.<MemberProfileResDto>builder()
@@ -38,7 +39,7 @@ public class MemberController {
                     "\n 닉네임과 한줄 소개 모두 데이터가 있어야햠." +
                     "\n 닉네임만 수정하는 경우 한줄 소개에는 Old 데이터가 와야함."
     )
-    @PatchMapping("/member")
+    @PatchMapping("")
     public BaseResponse patchMemberProfile(@Parameter(hidden = true) @AuthenticationPrincipal Member member, @RequestBody MemberProfilePatchReqDto dto){
         memberService.changeMemberProfile(member, dto);
         return new BaseResponse();
@@ -49,7 +50,7 @@ public class MemberController {
             summary = "유저 닉네임 중복 검사 ",
             description = "유저의 닉네임 수정 시 완료버튼을 누르기 전 닉네임 중복검사"
     )
-    @GetMapping("/member/nickname/duplication")
+    @GetMapping("/nickname/duplication")
     public BaseDataResponse<MemberNicknameDuplResDto> checkMemberNicknameDuplication(@RequestBody MemberNicknameDuplReqDto dto){
 
         return BaseDataResponse.<MemberNicknameDuplResDto>builder()
@@ -63,7 +64,7 @@ public class MemberController {
             description = "유저가 질문 알림을 받는 상태를 수정" +
                     "\n Member Id Token 필요"
     )
-    @PatchMapping("/member/question-tf")
+    @PatchMapping("/question-tf")
     public BaseResponse changeQuestionTF(@Parameter(hidden = true) @AuthenticationPrincipal Member member){
         memberService.changeQuestionTF(member);
         return new BaseResponse();
@@ -77,7 +78,7 @@ public class MemberController {
                     "\n size: 한번에 받을 개수" +
                     "\n page: 0부터 시작"
     )
-    @GetMapping("/member/point-record")
+    @GetMapping("/point-record")
     public BaseDataResponse<PaginationResDto<MemberPointRecordResDto>> getMemberPointRecord(@Parameter(hidden = true) @AuthenticationPrincipal Member member, Pageable pageable){
 
         return BaseDataResponse.<PaginationResDto<MemberPointRecordResDto>>builder()
@@ -90,7 +91,7 @@ public class MemberController {
                     "\n Member Id Token 필요" +
                     "\n 등록되어 있는 정보가 있으면 변경, 없다면 등록."
     )
-    @PatchMapping("/member/location")
+    @PatchMapping("/location")
     public BaseDataResponse<NowLocationResDto> patchMemberLocation(@Parameter(hidden = true) @AuthenticationPrincipal Member member,
                                                                    @RequestBody NowLocationReqDto dto){
 

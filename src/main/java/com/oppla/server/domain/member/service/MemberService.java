@@ -116,11 +116,13 @@ public class MemberService {
         // PointRecord -> MemberPointRecordResDto 생성
         List<MemberPointRecordResDto> dtoList =
                 page.stream()
-                        .map(pointRecord -> MemberPointRecordResDto.builder()
-                                                                    .description(pointRecord.getDescription())
-                                                                    .deal_point(pointRecord.getDeal_point())
-                                                                    .rest_point(pointRecord.getRest_point())
-                                                                    .build()
+                        .map(pointRecord ->
+                                MemberPointRecordResDto.builder()
+                                            .description(pointRecord.getDescription())
+                                            .dealPoint(pointRecord.getDeal_point())
+                                            .restPoint(pointRecord.getRest_point())
+                                            .createdAt(pointRecord.getCreatedAt())
+                                            .build()
                 ).collect(Collectors.toList());
 
         return PaginationResDto.<MemberPointRecordResDto>builder()
