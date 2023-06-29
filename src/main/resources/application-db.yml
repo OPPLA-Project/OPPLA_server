@@ -22,11 +22,10 @@ spring:
       on-profile: "db-local"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
   datasource:
     driver-class-name: org.h2.Driver
     username: oppla
-#    url: jdbc:h2:~/oppla;MODE=MySQL;
     url: jdbc:h2:tcp://localhost/~/oppla;MODE=MySQL;
     password:
 

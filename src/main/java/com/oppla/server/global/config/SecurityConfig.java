@@ -16,6 +16,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private static final String[] AUTH_URL = {
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+
+            /* H2 */
+            "/h2-console/**",
+
+            "/auth/**"
     };
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
@@ -23,8 +31,8 @@ public class SecurityConfig {
         //http.cors().disable();
 
         http.authorizeHttpRequests((request) -> request
-                .antMatchers(AUTH_URL).authenticated()
-                .anyRequest().permitAll());
+                .antMatchers(AUTH_URL).permitAll()
+                .anyRequest().authenticated());
 
         http.headers().frameOptions().disable();
 
