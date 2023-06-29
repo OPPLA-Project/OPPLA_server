@@ -28,7 +28,6 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
         Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
 
         if(!isMember.isPresent()) {
@@ -45,7 +44,6 @@ public class AuthService {
 
     public AuthToken naverLogin(AuthReqDto authReqDto) {
         Member member = clientNaver.getUserData(authReqDto.getAccessToken());
-        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
         Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
 
         if(!isMember.isPresent()) {
