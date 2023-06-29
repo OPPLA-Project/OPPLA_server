@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,9 @@ public class MemberPointRecordResDto {
     @Schema(description = "Point 변경 사유")
     private PointRecordDesc description;
     @Schema(description = "변경된 Point")
-    private Integer deal_point;
-    @Schema(description = "잔여 Point")
-    private Integer rest_point;
+    private Integer dealPoint;
+    @Schema(description = "변경 후 잔여 Point")
+    private Integer restPoint;
+    @Schema(description = "Point 사용 시점")
+    private LocalDateTime createdAt;
 }
