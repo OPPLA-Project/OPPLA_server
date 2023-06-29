@@ -28,13 +28,16 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
 
         if(!isMember.isPresent()) {
+            if(memberRepository.existsByEmail(member.getEmail())) {
+                throw new OtherSnsTypeException();
+            }
+
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
-        } else if (!isMember.get().getSnsType().equals(SnsType.KAKAO.toString())) {
-            throw new OtherSnsTypeException();
         } else {
             return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }
@@ -42,13 +45,16 @@ public class AuthService {
 
     public AuthToken naverLogin(AuthReqDto authReqDto) {
         Member member = clientNaver.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
 
         if(!isMember.isPresent()) {
+            if(memberRepository.existsByEmail(member.getEmail())) {
+                throw new OtherSnsTypeException();
+            }
+
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
-        } else if (!isMember.get().getSnsType().equals(SnsType.NAVER.toString())) {
-            throw new OtherSnsTypeException();
         } else {
             return tokenProvider.createAppToken(isMember.get().getId(), Role.USER);
         }

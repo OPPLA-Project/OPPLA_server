@@ -29,8 +29,12 @@ public class Member extends TimeStamped {
     @Column
     private String email;
 
-    @Column
+    @Column(name = "sns_type")
     private String snsType;
+
+    @Column(name = "sns_member_id")
+    @Builder.Default
+    private String snsMemberId = "0";
 
     @Column(name = "profile_url")
     private String profileUrl;
