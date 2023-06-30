@@ -3,9 +3,11 @@ package com.oppla.server.domain.member.service;
 import com.oppla.server.domain.answer.repository.AnswerRepository;
 import com.oppla.server.domain.member.dto.*;
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.entity.NowLocation;
 import com.oppla.server.domain.member.entity.PointRecord;
 import com.oppla.server.domain.member.exception.MemberNotFoundException;
 import com.oppla.server.domain.member.repository.MemberRepository;
+import com.oppla.server.domain.member.repository.NowLocationRepository;
 import com.oppla.server.domain.member.repository.PointRecordRepository;
 import com.oppla.server.domain.review.entity.Review;
 import com.oppla.server.domain.review.dto.AnswerSpeedResDto;
@@ -30,6 +32,7 @@ public class MemberService {
     private final AnswerRepository answerRepository;
     private final ReviewRepository reviewRepository;
     private final PointRecordRepository pointRecordRepository;
+    private final NowLocationRepository nowLocationRepository;
 
     @Transactional
     public MemberProfileResDto forMemberProfile(Member currentMember, Long memberId){
@@ -113,17 +116,46 @@ public class MemberService {
         // PointRecord -> MemberPointRecordResDto 생성
         List<MemberPointRecordResDto> dtoList =
                 page.stream()
-                        .map(pointRecord -> MemberPointRecordResDto.builder()
-                                                                    .description(pointRecord.getDescription())
-                                                                    .deal_point(pointRecord.getDeal_point())
-                                                                    .rest_point(pointRecord.getRest_point())
-                                                                    .build()
+                        .map(pointRecord ->
+                                MemberPointRecordResDto.builder()
+                                            .description(pointRecord.getDescription())
+                                            .dealPoint(pointRecord.getDeal_point())
+                                            .restPoint(pointRecord.getRest_point())
+                                            .createdAt(pointRecord.getCreatedAt())
+                                            .build()
                 ).collect(Collectors.toList());
 
         return PaginationResDto.<MemberPointRecordResDto>builder()
                 .page(page.getNumber())
                 .hasNext(page.hasNext())
                 .content(dtoList)
+                .build();
+    }
+
+    public NowLocationResDto patchMemberLocation(Member member, NowLocationReqDto dto) {
+        // Member를 기준으로 NowLocation 검색
+        NowLocation nowLocation = nowLocationRepository.findByMemberId(member.getId()).orElse(null);
+
+        if(nowLocation != null){
+            // 검색값이 존재하면 위치값 변경
+            nowLocation.changeLatitude(dto.getLatitude());
+            nowLocation.changeLongitude(dto.getLongitude());
+        }else{
+            // 검색값이 존재하지 않으면 새로운 NowLocation 등록
+            NowLocation newLocation = NowLocation.builder()
+                    .member(member)
+                    .latitude(dto.getLatitude())
+                    .longitude(dto.getLongitude())
+                    .build();
+
+            nowLocation = nowLocationRepository.save(newLocation);
+        }
+
+        
+        return NowLocationResDto.builder()
+                .memberId(member.getId())
+                .latitude(nowLocation.getLatitude())
+                .longitude(nowLocation.getLongitude())
                 .build();
     }
 }

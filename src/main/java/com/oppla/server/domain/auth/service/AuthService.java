@@ -29,11 +29,10 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
         Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
-            if(memberRepository.existsByEmail(member.getEmail())) {
+            if(memberRepository.existsByEmailAndStatus(member.getEmail(), MemberStatus.ACTIVE)) {
                 throw new OtherSnsTypeException();
             }
             memberRepository.save(member);
@@ -45,11 +44,10 @@ public class AuthService {
 
     public AuthToken naverLogin(AuthReqDto authReqDto) {
         Member member = clientNaver.getUserData(authReqDto.getAccessToken());
-        //Optional<Member> isMember = memberRepository.findByEmail(member.getEmail());
         Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
-            if(memberRepository.existsByEmail(member.getEmail())) {
+            if(memberRepository.existsByEmailAndStatus(member.getEmail(), MemberStatus.ACTIVE)) {
                 throw new OtherSnsTypeException();
             }
             memberRepository.save(member);
