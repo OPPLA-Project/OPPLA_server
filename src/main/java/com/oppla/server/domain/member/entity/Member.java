@@ -85,4 +85,8 @@ public class Member extends TimeStamped {
         this.question_TF = !this.question_TF;
     }
 
+    public void changeStatus(){
+        this.status = MemberStatus.INACTIVE;
+    }
+
 }

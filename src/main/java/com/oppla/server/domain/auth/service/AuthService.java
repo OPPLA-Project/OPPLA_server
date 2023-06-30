@@ -9,6 +9,7 @@ import com.oppla.server.domain.auth.dto.Role;
 import com.oppla.server.domain.auth.dto.SnsType;
 import com.oppla.server.domain.auth.exception.OtherSnsTypeException;
 import com.oppla.server.domain.member.entity.Member;
+import com.oppla.server.domain.member.enums.MemberStatus;
 import com.oppla.server.domain.member.repository.MemberRepository;
 
 import com.oppla.server.global.jwt.TokenProvider;
@@ -28,13 +29,12 @@ public class AuthService {
 
     public AuthToken kakaoLogin(AuthReqDto authReqDto) {
         Member member = clientKakao.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
-            if(memberRepository.existsByEmail(member.getEmail())) {
+            if(memberRepository.existsByEmailAndStatus(member.getEmail(), MemberStatus.ACTIVE)) {
                 throw new OtherSnsTypeException();
             }
-
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
         } else {
@@ -44,13 +44,12 @@ public class AuthService {
 
     public AuthToken naverLogin(AuthReqDto authReqDto) {
         Member member = clientNaver.getUserData(authReqDto.getAccessToken());
-        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberId(member.getSnsType(), member.getSnsMemberId());
+        Optional<Member> isMember = memberRepository.findMemberBySnsTypeAndSnsMemberIdAndStatus(member.getSnsType(), member.getSnsMemberId(), MemberStatus.ACTIVE);
 
         if(!isMember.isPresent()) {
-            if(memberRepository.existsByEmail(member.getEmail())) {
+            if(memberRepository.existsByEmailAndStatus(member.getEmail(), MemberStatus.ACTIVE)) {
                 throw new OtherSnsTypeException();
             }
-
             memberRepository.save(member);
             return tokenProvider.createAppToken(member.getId(), Role.USER);
         } else {
@@ -59,5 +58,11 @@ public class AuthService {
     }
     public AuthToken getTestJWT(Long memberId) {
         return tokenProvider.createAppToken(memberId, Role.USER);
+    }
+
+    @Transactional
+    public void withdrawal(Member member) {
+        member.changeStatus();
+        memberRepository.save(member);
     }
 }
